@@ -1,1 +1,4 @@
-# crud-nodejs
+## Stack
+
+- Node.js / Expree.js
+- MongoDB
