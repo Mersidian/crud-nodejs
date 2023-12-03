@@ -1,4 +1,10 @@
-## Stack
+## ภาษาที่ใช้
 
-- Node.js / Expree.js
+- Node.js
 - MongoDB
+- HTML
+
+## เฟรมเวิร์ค
+
+- Express.js
+- Tailwind CSS
