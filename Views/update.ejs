@@ -10,8 +10,9 @@
 
 <body>
     <div class="flex h-screen items-center justify-center">
-        <form action="/product/update/<%= product._id %>" method="POST" class="w-1/4">
+        <form action="/product/update/<%= product._id %>" method="POST" enctype="multipart/form-data" class="w-1/4">
             <div class="font-semibold text-lg p-2 text-center">Edit Product</div>
+
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Product Name</label>
                 <input type="text" id="name" name="name" class="w-full border rounded px-3 py-2"
@@ -24,11 +25,10 @@
                     value="<%= product.price %>">
             </div>
 
-            <!-- <div class="mb-4">
+            <div class="mb-4">
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Image</label>
-                <input type="file" id="img" name="img" class="w-full border rounded px-3 py-2"
-                value="<%= product.img %>">
-            </div> -->
+                <input type="file" id="img" name="img" class="w-full border rounded px-3 py-2">
+            </div>
 
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Description</label>

@@ -1,3 +1,4 @@
+const fs = require("fs")
 const products = require("../Models/products")
 
 //Display all product
@@ -52,7 +53,7 @@ const create = async (req, res, next) => {
 }
 
 //Update selected product
-const change = async (req, res) => {
+const change = async (req, res, next) => {
     try {
         const id = req.params.id
 
@@ -61,10 +62,24 @@ const change = async (req, res) => {
             price: req.body.price,
             description: req.body.desc
         }
+
+        //Check if file have upload
+        if (req.file) {
+            data.img = req.file.filename
+
+            //Find an old file and delete it
+            const result = await products.findOne({ _id: id }).exec()
+            fs.unlink("Uploads/" + result.img, (error) => {
+                if (error) {
+                    console.log(error)
+                }
+            })
+        }
+
         await products.findOneAndUpdate({ _id: id }, data, ({ new: true })).exec()
         res.send(
             `<script>
-            alert('Your selected product has updated!')
+            alert('Your selected product has been updated!')
             window.location.href = "/product"
             </script>`
         )
@@ -79,7 +94,23 @@ const remove = async (req, res) => {
     try {
         const id = req.params.id
         const result = await products.findOneAndDelete({ _id: id }).exec()
-        res.redirect("/product")
+        
+        console.log(result.img)
+
+        if (result?.img) {
+            fs.unlink("Uploads/" + result.img, (error) => {
+                if (error) {
+                    console.log(error)
+                }
+                res.send(
+                    `<script>
+                    alert('Product has been removed!')
+                    window.location.href = "/product"
+                    </script>`
+                )
+            })
+        }
+
     } catch (error) {
         res.send(`Internal Server Error`).status(500)
         console.log(error)
